@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FreeCourse.Services.Catalog.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace FreeCourse.Services.Catalog
 {
@@ -28,8 +30,16 @@ namespace FreeCourse.Services.Catalog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddControllers();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.Authority = Configuration["IdentityServerUrl"];
+                options.Audience = "resource_catalog";
+                options.RequireHttpsMetadata = false;
+            });
+            services.AddControllers(options =>
+            {
+                options.Filters.Add(new AuthorizeFilter());
+            });
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICourseService, CourseManager>();
             services.Configure<DatabaseSettings>(Configuration.GetSection("DatabaseSettings"));
@@ -44,6 +54,10 @@ namespace FreeCourse.Services.Catalog
             });
             services.AddAutoMapper(typeof(Startup));
 
+
+
+           
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,7 +71,7 @@ namespace FreeCourse.Services.Catalog
             }
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
