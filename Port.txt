@@ -1,2 +1,9 @@
 Services
 	-catalogAPI => 5011
+	
+	--photostockAPI =>5012
+	--basketAPI =>5013
+	-catalogAPI => 5014
+	--productAPI=>5015
+	--discountAPI=>5016
+identityserver =>5001
