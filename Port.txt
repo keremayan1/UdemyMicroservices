@@ -6,4 +6,5 @@ Services
 	-catalogAPI => 5014
 	--productAPI=>5015
 	--discountAPI=>5016
+	--discountEfAPI=>5017
 identityserver =>5001

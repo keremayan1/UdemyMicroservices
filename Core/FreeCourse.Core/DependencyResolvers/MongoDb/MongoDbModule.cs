@@ -17,10 +17,17 @@ namespace FreeCourse.Core.DependencyResolvers.MongoDb
         public void Load(IServiceCollection services, IConfiguration configuration)
         {
             services.AddOptions();
-
+       
             services.AddSingleton<IMongoDbConnectionSettings>(sp =>
                 sp.GetRequiredService<IOptions<MongoDbConnectionSettings>>().Value);
+          
         }
-       
+        public void Load2(IServiceCollection services, IConfiguration configuration)
+        {
+
+           
+          
+
+        }
     }
 }
