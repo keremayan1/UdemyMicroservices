@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FreeCourse.Core.Entities.MongoDb;
+using FreeCourse.Core.Entities.MongoDb.Concrete;
 using Microsoft.Extensions.Configuration;
 
 namespace FreeCourse.Core.DataAccess.MongoDb.Context
@@ -13,7 +14,7 @@ namespace FreeCourse.Core.DataAccess.MongoDb.Context
         public readonly IConfiguration configuration;
         public readonly MongoDbConnectionSettings connectionSettings;
 
-        protected MongoDbContextBase(IConfiguration configuration)
+        public MongoDbContextBase(IConfiguration configuration)
         {
             this.configuration = configuration;
             connectionSettings = configuration.GetSection("MongoDbConnectionSettings").Get<MongoDbConnectionSettings>();

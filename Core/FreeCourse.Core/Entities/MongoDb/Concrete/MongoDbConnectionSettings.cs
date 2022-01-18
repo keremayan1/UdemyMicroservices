@@ -1,6 +1,6 @@
 ﻿using MongoDB.Driver;
 
-namespace FreeCourse.Core.Entities.MongoDb
+namespace FreeCourse.Core.Entities.MongoDb.Concrete
 {
     public class MongoDbConnectionSettings : IMongoDbConnectionSettings
     {

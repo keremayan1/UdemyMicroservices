@@ -9,7 +9,7 @@ using MongoDB.Bson;
 
 namespace FreeCourse.Core.DataAccess.MongoDb
 {
-    public interface IMongoDbRepository<T> where T:MongoBaseEntity
+    public interface IMongoDbRepository<T> where T:IMongoDbEntity
     {
         void Add(T entity);
         IQueryable<T> GetList(Expression<Func<T, bool>> predicate = null);

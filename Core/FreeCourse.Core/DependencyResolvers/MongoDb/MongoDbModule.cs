@@ -1,4 +1,5 @@
 ﻿using FreeCourse.Core.Entities.MongoDb;
+using FreeCourse.Core.Entities.MongoDb.Concrete;
 using FreeCourse.Core.Utilities.IoC;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,18 +17,10 @@ namespace FreeCourse.Core.DependencyResolvers.MongoDb
         public IConfiguration Configuration { get; set; }
         public void Load(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddOptions();
-       
             services.AddSingleton<IMongoDbConnectionSettings>(sp =>
                 sp.GetRequiredService<IOptions<MongoDbConnectionSettings>>().Value);
           
         }
-        public void Load2(IServiceCollection services, IConfiguration configuration)
-        {
-
-           
-          
-
-        }
+      
     }
 }

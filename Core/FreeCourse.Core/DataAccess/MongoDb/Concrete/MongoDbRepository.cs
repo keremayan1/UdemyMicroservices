@@ -5,30 +5,22 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using FreeCourse.Core.Entities.MongoDb;
+
+using FreeCourse.Core.Entities.MongoDb.Concrete;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace FreeCourse.Core.DataAccess.MongoDb.Concrete
 {
-    public abstract  class MongoDbRepository<TEntity> : IMongoDbRepository<TEntity> where TEntity :MongoBaseEntity
+    public  class MongoDbRepository<TEntity> : IMongoDbRepository<TEntity> where TEntity :IMongoDbEntity
     {
         private readonly IMongoCollection<TEntity> _collection;
-        public string CollectionName { get; set; }
-
-        protected MongoDbRepository(MongoDbConnectionSettings connectionSettings,string collectionName)
+        protected MongoDbRepository(IMongoDbConnectionSettings connectionSettings)
         {
-            CollectionName = collectionName;
-            ConnectionSettingControl(connectionSettings);
-
-
-            MongoClient client = connectionSettings.GetMongoClientSettings() == null ?
-                new MongoClient(connectionSettings.ConnectionStrings) :
-                new MongoClient(connectionSettings.GetMongoClientSettings());
-         
-            var databaseName = client.GetDatabase(connectionSettings.DatabaseName);
-            _collection = databaseName.GetCollection<TEntity>(collectionName);
+            var database = new MongoClient(connectionSettings.ConnectionStrings).GetDatabase(connectionSettings.DatabaseName);
+            _collection = database.GetCollection<TEntity>(typeof(TEntity).Name);
         }
-
+      
         public virtual void Add(TEntity entity)
         {
             var options = new InsertOneOptions { BypassDocumentValidation = false };
@@ -136,19 +128,7 @@ namespace FreeCourse.Core.DataAccess.MongoDb.Concrete
          return    await _collection.Find(_collection => true).ToListAsync();
         }
 
-        private void ConnectionSettingControl(MongoDbConnectionSettings settings)
-        {
-            if (settings.GetMongoClientSettings() != null &&
-                (string.IsNullOrEmpty(CollectionName) || string.IsNullOrEmpty(settings.DatabaseName)))
-                throw new Exception("Value cannot be null or empty");
-
-
-            if (string.IsNullOrEmpty(CollectionName) ||
-                string.IsNullOrEmpty(settings.ConnectionStrings) ||
-                string.IsNullOrEmpty(settings.DatabaseName))
-                throw new Exception("Value cannot be null or empty");
-
-        }
+   
 
      
     }

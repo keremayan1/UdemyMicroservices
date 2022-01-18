@@ -31,6 +31,7 @@ namespace FreeCourse.Services.DiscountEfCore.Business.DependencyResolvers.Autofa
                     Selector = new AspectInterceptorSelector()
                 }).SingleInstance();
 
+
         }
     }
 }
