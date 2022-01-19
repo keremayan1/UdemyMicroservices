@@ -12,8 +12,6 @@ namespace FreeCourse.Core.DataAccess.EntityFramework.Concrete
     public class EfEntityRepository<TEntity,TContext>:IAsyncEntityRepository<TEntity>,IEntityRepository<TEntity> where TEntity : class,IEntity
     where TContext :DbContext
     {
-
-
         protected TContext _context;
 
         public EfEntityRepository(TContext context)

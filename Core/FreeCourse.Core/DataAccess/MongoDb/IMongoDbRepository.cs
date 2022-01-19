@@ -29,6 +29,6 @@ namespace FreeCourse.Core.DataAccess.MongoDb
         Task DeleteAsync(T record);
         bool Any(Expression<Func<T, bool>> predicate = null);
 
-        Task<List<T>> GetListAsync2();
+  
     }
 }

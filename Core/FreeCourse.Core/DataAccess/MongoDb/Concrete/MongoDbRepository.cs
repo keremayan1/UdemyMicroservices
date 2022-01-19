@@ -123,11 +123,7 @@ namespace FreeCourse.Core.DataAccess.MongoDb.Concrete
 
         
 
-        public async Task<List<TEntity>> GetListAsync2()
-        {
-         return    await _collection.Find(_collection => true).ToListAsync();
-        }
-
+      
    
 
      
