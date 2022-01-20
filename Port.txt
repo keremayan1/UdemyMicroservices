@@ -7,4 +7,5 @@ Services
 	--productAPI=>5015
 	--discountAPI=>5016
 	--discountEfAPI=>5017
+	--fakePaymentAPI=>5018
 identityserver =>5001
