@@ -3,9 +3,10 @@ Services
 	
 	--photostockAPI =>5012
 	--basketAPI =>5013
-	-catalogAPI => 5014
+	-catalog2API => 5014
 	--productAPI=>5015
 	--discountAPI=>5016
 	--discountEfAPI=>5017
 	--fakePaymentAPI=>5018
 identityserver =>5001
+Gateway =>5000
