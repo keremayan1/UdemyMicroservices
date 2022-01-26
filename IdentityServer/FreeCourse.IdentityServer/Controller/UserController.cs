@@ -8,10 +8,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
  using Microsoft.IdentityModel.JsonWebTokens;
-
+using static IdentityServer4.IdentityServerConstants;
  namespace FreeCourse.IdentityServer.Controller
 {
-    [Authorize(IdentityServerConstants.LocalApi.PolicyName)]
+    [Authorize(LocalApi.PolicyName)]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -41,7 +41,6 @@ using Microsoft.AspNetCore.Mvc;
             return Ok(result);
         }
 
-        [HttpGet]
         public async Task<IActionResult> GetUser()
         {
             var userIdClaim = User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub);
