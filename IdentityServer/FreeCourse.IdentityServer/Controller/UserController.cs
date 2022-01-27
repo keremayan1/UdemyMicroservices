@@ -40,7 +40,7 @@ using static IdentityServer4.IdentityServerConstants;
 
             return Ok(result);
         }
-
+        [HttpGet]
         public async Task<IActionResult> GetUser()
         {
             var userIdClaim = User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub);

@@ -24,15 +24,16 @@ namespace FreeCourse.Services.Catalog.Controllers
             var result = await _courseService.GetAllAsync();
           return  CreateActionResult(result);
         }
-        [HttpGet("getbyuserid")]
+        [HttpGet("GetByUserId/{userId}")] //2. Yontem HttpGet Istegi Uzerinden
+      //  [Route("/api/[controller]/GetByUserId/{userId}")] 1.Yontem Route Yontemi
         //courses/getbyuserid/userId
-      
+
         public async Task<IActionResult> GetByUserId(string userId)
         {
             var result = await _courseService.GetByUserIdAsync(userId);
             return CreateActionResult(result);
         }
-        [HttpGet("getbyid")]
+        [HttpGet("getbyid/{courseId}")]
         public async Task<IActionResult> GetByIdAsync(string courseId)
         {
             var result = await _courseService.GetByIdAsync(courseId);
@@ -46,13 +47,13 @@ namespace FreeCourse.Services.Catalog.Controllers
             var result = await _courseService.AddAsync(courseCreateDto);
             return CreateActionResult(result);
         }
-        [HttpPost("update")]
+        [HttpPut]
         public async Task<IActionResult> Update(CourseUpdateDto courseUpdateDto)
         {
             var result = await _courseService.UpdateAsync(courseUpdateDto);
             return CreateActionResult(result);
         }
-        [HttpDelete("delete")]
+        [HttpDelete("{courseId}")]
         public async Task<IActionResult> Delete(string courseId)
         {
             var result = await _courseService.DeleteAsync(courseId);

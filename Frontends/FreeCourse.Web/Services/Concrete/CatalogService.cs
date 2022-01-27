@@ -22,7 +22,7 @@ namespace FreeCourse.Web.Services.Concrete
 
         public async Task<bool> AddCourseAsync(CourseCreateInput courseCreateInput)
         {
-            var response = await _httpClient.PostAsJsonAsync<CourseCreateInput>("courses", courseCreateInput);
+            var response = await _httpClient.PostAsJsonAsync<CourseCreateInput>("courses/add", courseCreateInput);
             return response.IsSuccessStatusCode;
         }
 
@@ -58,7 +58,7 @@ namespace FreeCourse.Web.Services.Concrete
 
         public async Task<List<CourseViewModel>> GetAllCourseByUserId(string userId)
         {
-            var response = await _httpClient.GetAsync("courses/getbyuserid/userId");
+            var response = await _httpClient.GetAsync($"courses/getbyuserid/{userId}");
             if (!response.IsSuccessStatusCode)
             {
                 return null;
@@ -69,7 +69,7 @@ namespace FreeCourse.Web.Services.Concrete
 
         public async Task<CourseViewModel> GetByCourseId(string courseId)
         {
-            var response = await _httpClient.GetAsync("courses/getbyid/courseId");
+            var response = await _httpClient.GetAsync($"courses/getbyid/{courseId}");
             if (!response.IsSuccessStatusCode)
             {
                 return null;

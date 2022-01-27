@@ -36,16 +36,19 @@ namespace FreeCourse.Web
            
             var serviceApiSettings = Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
             services.AddScoped<ResourceOwnerPasswordTokenHandler>();
-
+            services.AddScoped<ClientCredentialTokenHandler>();
+            services.AddScoped<ISharedIdentityService, SharedIdentityService>();
+            services.AddHttpClient<IClientCridentialTokenService, ClientCridentialTokenService>();
             services.AddHttpClient<ICatalogService, CatalogService>(opt =>
             {
                 opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Catalog.Path}");
-            });
+            }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
             services.AddHttpClient<IUserService, UserService>(opt =>
             {
                 opt.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUri);
             }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
+            services.AddAccessTokenManagement();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,options=> {
                 options.LoginPath = "/Auth/SignIn";
                 options.ExpireTimeSpan = TimeSpan.FromDays(60);

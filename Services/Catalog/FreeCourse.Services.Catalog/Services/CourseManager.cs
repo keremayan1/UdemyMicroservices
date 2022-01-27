@@ -103,7 +103,7 @@ namespace FreeCourse.Services.Catalog.Services
             {
                 return  Response<NoContent>.Fail("course not found",404);
             }
-            return Response<NoContent>.Success(200);
+            return Response<NoContent>.Success(204);
         }
 
         public async Task<Response<NoContent>> DeleteAsync(string courseId)
