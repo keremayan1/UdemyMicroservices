@@ -18,7 +18,7 @@ namespace FreeCourse.Services.Catalog.Controllers
             _courseService = courseService;
         }
 
-        [HttpGet("getall")]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var result = await _courseService.GetAllAsync();
@@ -41,7 +41,7 @@ namespace FreeCourse.Services.Catalog.Controllers
         }
         //courses/getbyid/id
 
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> Add(CourseCreateDto courseCreateDto)
         {
             var result = await _courseService.AddAsync(courseCreateDto);

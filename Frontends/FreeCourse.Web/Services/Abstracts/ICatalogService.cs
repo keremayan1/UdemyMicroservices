@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace FreeCourse.Web.Services.Abstracts
 {
-   public interface ICatalogService
+    public interface ICatalogService
     {
         Task<List<CourseViewModel>> GetAllCourse();
         Task<List<CategoryViewModel>> GetAllCategoryAsync();
         Task<List<CourseViewModel>> GetAllCourseByUserId(string userId);
-      
+        Task<CategoryViewModel> GetByCategoryId(string categoryId);
         Task<CourseViewModel> GetByCourseId(string courseId);
 
         Task<bool> AddCourseAsync(CourseCreateInput courseCreateInput);

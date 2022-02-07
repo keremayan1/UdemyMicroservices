@@ -25,7 +25,7 @@ namespace FreeCourse.Services.Catalog.Controllers
             var result = await _categoryService.GetAllAsync();
             return CreateActionResult(result);
         }
-        [HttpGet("getbyid")]
+        [HttpGet("getbyid/{categoryId}")]
         public async Task<IActionResult> GetById(string categoryId)
         {
             var result = await _categoryService.GetByCategoryIdAsync(categoryId);

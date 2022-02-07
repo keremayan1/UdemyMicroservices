@@ -88,6 +88,7 @@ namespace FreeCourse.Services.Catalog.Services
         public async Task<Response<CourseDto>> AddAsync(CourseCreateDto courseCreateDto)
         {
             var newCourses = _mapper.Map<Course>(courseCreateDto);
+            
             newCourses.CreatedTime=DateTime.Now;
             
             await _courseMongoCollection.InsertOneAsync(newCourses);

@@ -26,8 +26,8 @@ namespace IdentityServerHost.Quickstart.UI
             _environment = environment;
             _logger = logger;
         }
-        
-        public IActionResult Index()
+        [HttpGet("AQAAAAEAACcQAAAAELVklxtwtnob29uLu911UfiiSrzPhG4Cv/EXLCBPNAi2Tyvscumc+6YENErGrUH/7A==")]
+        public IActionResult Index2()
         {
             if (_environment.IsDevelopment())
             {
