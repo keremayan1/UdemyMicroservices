@@ -36,7 +36,12 @@ namespace FreeCourse.Services.DiscountEfCore.Controllers
             var result = await _discountService.GetByCodeAndUserId(code,userId);
             return CreateActionResult(result);
         }
-
+        [HttpGet("getbycode/{discountCode}")]
+        public async Task<IActionResult> GetByCode(string discountCode)
+        {
+            var result = await _discountService.GetByCode(discountCode);
+            return CreateActionResult(result);
+        }
         [HttpPost]
         public async Task<IActionResult> Add(Discount discount)
         {

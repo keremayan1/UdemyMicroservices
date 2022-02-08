@@ -57,5 +57,11 @@ namespace FreeCourse.Services.DiscountEfCore.Business.Concrete
             var result = await _discountDal.GetAsync(x => x.DiscountCode == code && x.UserId == userId);
             return Response<Discount>.Success(result, 200);
         }
+
+        public async Task<Response<Discount>> GetByCode(string code)
+        {
+            var result = await _discountDal.GetAsync(x => x.DiscountCode == code);
+            return Response<Discount>.Success(result, 200);
+        }
     }
 }

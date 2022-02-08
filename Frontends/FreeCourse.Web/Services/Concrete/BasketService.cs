@@ -44,7 +44,7 @@ namespace FreeCourse.Web.Services.Concrete
         {
             await CancelApplyDiscount();
             var basket = await Get();
-            if (basket==null || basket.DiscountCode==null)
+            if (basket==null)
             {
                 return false;
             }
@@ -53,8 +53,7 @@ namespace FreeCourse.Web.Services.Concrete
             {
                 return false;
             }
-            basket.DiscountRate = hasDiscount.Rate;
-            basket.DiscountCode = hasDiscount.DiscountCode;
+            basket.ApplyDiscount(hasDiscount.DiscountCode, hasDiscount.Rate);
             await SaveOrUpdate(basket);
             return true;
 
@@ -67,7 +66,7 @@ namespace FreeCourse.Web.Services.Concrete
             {
                 return false;
             }
-            basket.DiscountCode = null;
+            basket.CancelApplyDiscount();
             await SaveOrUpdate(basket);
             return true;
 

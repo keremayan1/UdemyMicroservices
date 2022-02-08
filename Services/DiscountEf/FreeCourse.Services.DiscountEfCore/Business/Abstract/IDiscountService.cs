@@ -13,5 +13,6 @@ namespace FreeCourse.Services.DiscountEfCore.Business.Abstract
         Task<Response<NoContent>> Update(Discount discount);
         Task<Response<NoContent>> Delete(int id);
         Task<Response<Discount>> GetByCodeAndUserId(string code, string userId);
+        Task<Response<Discount>> GetByCode(string code);
     }
 }

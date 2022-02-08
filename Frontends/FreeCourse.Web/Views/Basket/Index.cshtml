@@ -48,7 +48,10 @@
                     <form asp-controller="Basket" asp-action="ApplyDiscount">
                         @if (Model.HasDiscount)
                         {
-                            <div class="alert alert-success"> @Model.DiscountCode indirim kodu uygulandi </div>
+                            <div class="alert alert-success"> @Model.DiscountCode indirim kodu uygulandi
+                               <a asp-controller="Basket" asp-action="CancelApplyDiscount"  >(iptal et)</a>    
+                            </div>
+                         
                         }
                         @if (TempData["discountStatus"] != null && (bool)TempData["discountStatus"]==false)
                         {
@@ -57,8 +60,9 @@
                         <div class="input-group mb-3">
                             @*"DiscountApplyInput.Code" method ismi ile otomatik kendisi mapleniyor*@
                             <input type="text" name="DiscountApplyInput.Code" class="form-control"/>
-                            <div asp-validation-summary="All"></div>
+                           
                             <button type="submit" class="btn btn-outline-secondary">Uygula </button>
+                             <div asp-validation-summary="All"></div>
                         </div>
                     </form>
                 }
