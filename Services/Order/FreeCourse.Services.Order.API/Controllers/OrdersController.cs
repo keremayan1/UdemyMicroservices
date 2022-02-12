@@ -35,7 +35,7 @@ namespace FreeCourse.Services.Order.API.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveOrders(CreateOrderCommand createOrderCommand)
         {
-            createOrderCommand.BuyerId = _sharedIdentityService.GetUserId;
+           
             var response = await _mediator.Send(createOrderCommand);
             return CreateActionResult(response);
 

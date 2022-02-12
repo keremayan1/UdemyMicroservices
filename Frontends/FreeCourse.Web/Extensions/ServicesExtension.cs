@@ -13,6 +13,7 @@ namespace FreeCourse.Web.Extensions
     {
         public void Load(IServiceCollection services, IConfiguration configuration)
         {
+
             var serviceApiSettings = configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
             services.AddHttpClient<IClientCridentialTokenService, ClientCridentialTokenService>();
             services.AddHttpClient<IIdentityService, IdentityService>();

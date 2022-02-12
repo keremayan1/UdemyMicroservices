@@ -1,8 +1,10 @@
-﻿namespace FreeCourse.Services.FakePayment.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace FreeCourse.Services.FakePayment.Models
 {
     public class PaymentDto
     {
-
         public string CardName { get; set; }
         public string CardNumber { get; set; }
         public string Expiration { get; set; }
@@ -10,7 +12,5 @@
         public decimal TotalPrice { get; set; }
 
         public OrderDto Order { get; set; }
-
-
     }
 }

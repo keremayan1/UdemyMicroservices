@@ -1,4 +1,5 @@
 ﻿using FreeCourse.Shared.Dto;
+using FreeCourse.Shared.Services;
 using FreeCourse.Web.Models.Orders;
 using FreeCourse.Web.Models.Payment;
 using FreeCourse.Web.Services.Abstracts;
@@ -14,11 +15,13 @@ namespace FreeCourse.Web.Services.Concrete
         private readonly HttpClient _httpClient;
         IPaymentService _paymentService;
         private readonly IBasketService _basketService;
-        public OrderService(HttpClient httpClient, IPaymentService paymentService, IBasketService basketService)
+        ISharedIdentityService _sharedIdentityService;
+        public OrderService(HttpClient httpClient, IPaymentService paymentService, IBasketService basketService, ISharedIdentityService sharedIdentityService)
         {
             _httpClient = httpClient;
             _paymentService = paymentService;
             _basketService = basketService;
+            _sharedIdentityService = sharedIdentityService;
         }
 
         public async Task<OrderCreatedViewModel> CreateOrder(CheckoutInfoInput checkoutInfoInput)
@@ -41,7 +44,7 @@ namespace FreeCourse.Web.Services.Concrete
 
             var orderCreateInput = new OrderCreateInput
             {
-               
+               BuyerId=_sharedIdentityService.GetUserId,
                 Address = new AddressCreateInput { Province = checkoutInfoInput.Province, District = checkoutInfoInput.District, Street = checkoutInfoInput.Street, Line = checkoutInfoInput.Line, ZipCode = checkoutInfoInput.ZipCode },
             };
             basket.BasketItems.ForEach(x =>
@@ -76,9 +79,41 @@ namespace FreeCourse.Web.Services.Concrete
             return response.Data;
         }
 
-        public Task SuspendOrder(CheckoutInfoInput checkoutInfoInput)
+        public async Task<OrderSuspendViewModel> SuspendOrder(CheckoutInfoInput checkoutInfoInput)
         {
-            throw new System.NotImplementedException();
+
+            var basket = await _basketService.Get();
+            var orderCreateInput = new OrderCreateInput()
+            {
+                BuyerId = _sharedIdentityService.GetUserId,
+                Address = new AddressCreateInput { Province = checkoutInfoInput.Province, District = checkoutInfoInput.District, Street = checkoutInfoInput.Street, Line = checkoutInfoInput.Line, ZipCode = checkoutInfoInput.ZipCode },
+            };
+
+            basket.BasketItems.ForEach(x =>
+            {
+                var orderItem = new OrderItemCreateInput { ProductId = x.CourseId, Price = x.GetCurrentPrice, PictureUrl = "", ProductName = x.CourseName };
+                orderCreateInput.OrderItems.Add(orderItem);
+            });
+
+            var paymentInfoInput = new PaymentInfoInput()
+            {
+                CardName = checkoutInfoInput.CardName,
+                CardNumber = checkoutInfoInput.CardNumber,
+                Expiration = checkoutInfoInput.Expiration,
+                CVV = checkoutInfoInput.CVV,
+                TotalPrice = basket.TotalPrice,
+                Order = orderCreateInput
+            };
+
+            var responsePayment = await _paymentService.ReceivePayment(paymentInfoInput);
+
+            if (!responsePayment)
+            {
+                return new OrderSuspendViewModel() { Error = "Ödeme alınamadı", IsSuccessful = false };
+            }
+
+            await _basketService.Delete();
+            return new OrderSuspendViewModel() { IsSuccessful = true };
         }
     }
 }

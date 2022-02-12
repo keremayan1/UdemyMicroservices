@@ -1,6 +1,7 @@
 ﻿using FreeCourse.Web.Models.Orders;
 using FreeCourse.Web.Services.Abstracts;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace FreeCourse.Web.Controllers
@@ -25,19 +26,35 @@ namespace FreeCourse.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Checkout(CheckoutInfoInput input)
         {
-            var orderStatus = await _orderService.CreateOrder(input);
-            if (!orderStatus.IsSuccessful)
+            //1. Senkron
+            //var orderStatus = await _orderService.CreateOrder(input);
+            //2. Yol Asenkron Iletisim
+            var orderSuspend = await _orderService.SuspendOrder(input);
+            if (!orderSuspend.IsSuccessful)
             {
                 var basket = await _basketService.Get();
-                ViewBag.error = orderStatus.Error;
+
+                ViewBag.basket = basket;
+
+                ViewBag.error = orderSuspend.Error;
+
                 return View();
             }
-            return View(nameof(SuccessfulCheckout), new { orderId = orderStatus.OrderId });
+            //1. yol senkron iletişim
+            //  return RedirectToAction(nameof(SuccessfulCheckout), new { orderId = orderStatus.OrderId });
+
+            //2.yol asenkron iletişim
+            return RedirectToAction(nameof(SuccessfulCheckout), new { orderId = new Random().Next(1, 1000) });
         }
         public IActionResult SuccessfulCheckout(int orderId)
         {
-            ViewBag.orderId = orderId;
+             ViewBag.orderId = orderId;
             return View();
+
+        }
+        public async Task<IActionResult> CheckoutHistory()
+        {
+            return View(await _orderService.GetOrder());
 
         }
     }

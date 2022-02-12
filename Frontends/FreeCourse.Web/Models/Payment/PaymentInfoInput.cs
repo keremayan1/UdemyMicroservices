@@ -1,4 +1,7 @@
-﻿namespace FreeCourse.Web.Models.Payment
+﻿using FreeCourse.Web.Models.Orders;
+using System.Collections.Generic;
+
+namespace FreeCourse.Web.Models.Payment
 {
     public class PaymentInfoInput
     {
@@ -8,6 +11,6 @@
         public string CVV { get; set; }
         public decimal TotalPrice { get; set; }
 
-
+        public OrderCreateInput Order { get; set; }
     }
 }

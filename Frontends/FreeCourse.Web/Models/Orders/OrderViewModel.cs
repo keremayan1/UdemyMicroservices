@@ -8,9 +8,11 @@ namespace FreeCourse.Web.Models.Orders
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
 
-        //Odeme Gecmisinde adres alanina ihtiyac olmadigindan dolayi alinmadi
-        //public Address Address { get; set; }
+        //Ödeme geçmişimde adress alanına ihtiyaç olmadığından dolayı alınmadı
+        // public AddressDto Address { get; set; }
+
         public string BuyerId { get; set; }
+
         public List<OrderItemViewModel> OrderItems { get; set; }
     }
 }

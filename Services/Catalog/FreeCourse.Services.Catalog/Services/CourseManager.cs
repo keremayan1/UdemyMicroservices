@@ -7,7 +7,9 @@ using FreeCourse.Services.Catalog.Models;
 using FreeCourse.Services.Catalog.Models.DTO;
 using FreeCourse.Services.Catalog.Settings;
 using FreeCourse.Shared.Dto;
+using Mass= MassTransit;
 using MongoDB.Driver;
+using FreeCourse.Shared.Messages;
 
 namespace FreeCourse.Services.Catalog.Services
 {
@@ -17,9 +19,10 @@ namespace FreeCourse.Services.Catalog.Services
         private readonly IMongoCollection<Category> _categoryMongoCollection;
         private readonly IMapper _mapper;
         ICategoryService _categoryService;
+        private readonly Mass.IPublishEndpoint _publishEndpoint;
+       
 
-
-        public CourseManager( IMapper mapper,IDatabaseSettings settings, ICategoryService categoryService)
+        public CourseManager(IMapper mapper, IDatabaseSettings settings, ICategoryService categoryService, Mass.IPublishEndpoint publishEndpoint)
         {
             var mongoClient = new MongoClient(settings.ConnectionStrings);
             var databaseName = mongoClient.GetDatabase(settings.DatabaseName);
@@ -27,6 +30,8 @@ namespace FreeCourse.Services.Catalog.Services
             _categoryMongoCollection = databaseName.GetCollection<Category>(settings.CategoryCollectionName);
             _mapper = mapper;
             _categoryService = categoryService;
+            _publishEndpoint = publishEndpoint;
+          
         }
 
         public async Task<Response<List<CourseDto>>> GetAllAsync()
@@ -92,6 +97,7 @@ namespace FreeCourse.Services.Catalog.Services
             newCourses.CreatedTime=DateTime.Now;
             
             await _courseMongoCollection.InsertOneAsync(newCourses);
+
             return  Response<CourseDto>.Success(_mapper.Map<CourseDto>(newCourses),200);
         }
 
@@ -104,6 +110,8 @@ namespace FreeCourse.Services.Catalog.Services
             {
                 return  Response<NoContent>.Fail("course not found",404);
             }
+            await _publishEndpoint.Publish<CourseNameChangedEvent>(new CourseNameChangedEvent { CourseId = courseUpdateDto.Id, UpdatedName = courseUpdateDto.Name });
+            await _publishEndpoint.Publish<BasketCourseNameChangedEvent>(new BasketCourseNameChangedEvent { CourseId = courseUpdateDto.Id, UpdatedName = courseUpdateDto.Name });
             return Response<NoContent>.Success(204);
         }
 
