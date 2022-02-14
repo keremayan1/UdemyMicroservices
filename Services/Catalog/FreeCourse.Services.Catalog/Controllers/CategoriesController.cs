@@ -12,7 +12,7 @@ namespace FreeCourse.Services.Catalog.Controllers
     [ApiController]
     public class CategoriesController : CustomControllerBases
     {
-        private ICategoryService _categoryService;
+        private ICategoryService _categoryService; 
 
         public CategoriesController(ICategoryService categoryService)
         {
