@@ -9,14 +9,12 @@ namespace FreeCourse.Core.DependencyResolvers.MongoDb
 {
     public class MongoDbModule:ICoreModule
     {
-        public MongoDbModule(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+      
 
-        public IConfiguration Configuration { get; set; }
+    
         public void Load(IServiceCollection services, IConfiguration configuration)
         {
+           
             services.AddSingleton<IMongoDbConnectionSettings>(sp =>
                 sp.GetRequiredService<IOptions<MongoDbConnectionSettings>>().Value);
           

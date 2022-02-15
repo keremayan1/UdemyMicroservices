@@ -63,9 +63,10 @@
       "UpstreamPathTemplate": "/services/discount/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
+      "DelegatingHandlers": [ "TokenExchangeDelegateHandler" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme", //API Koruma
-        "AllowedScopes": [ "discount_fullpermisson" ] //Hangi Scope Istiyor
+        
       }
     },
     {
@@ -97,9 +98,10 @@
       "UpstreamPathTemplate": "/services/fakepayment/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
+      "DelegatingHandlers": [ "TokenExchangeDelegateHandler" ],
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "GatewayAuthenticationScheme", //API Koruma
-        "AllowedScopes": [ "payment_fullpermisson" ] //Hangi Scope Istiyor
+        "AuthenticationProviderKey": "GatewayAuthenticationScheme" //API Koruma
+        
       }
     }
 

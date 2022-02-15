@@ -7,7 +7,7 @@ namespace FreeCourse.Services.DiscountEfCore.Business.Validation
     {
         public DiscountValidator()
         {
-            RuleFor(x => x.UserId).NotEmpty().WithMessage("Id Bos Olamaz!");
+            
             RuleFor(x => x.Rate).NotEmpty();
         }
     }

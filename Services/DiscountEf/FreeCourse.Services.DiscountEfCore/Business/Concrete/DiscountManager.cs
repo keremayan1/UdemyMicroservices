@@ -6,16 +6,19 @@ using FreeCourse.Services.DiscountEfCore.Business.Validation;
 using FreeCourse.Services.DiscountEfCore.DataAccess.Abstract;
 using FreeCourse.Services.DiscountEfCore.Entities;
 using FreeCourse.Shared.Dto;
+using FreeCourse.Shared.Services;
 
 namespace FreeCourse.Services.DiscountEfCore.Business.Concrete
 {
     public class DiscountManager:IDiscountService
     {
         private readonly IDiscountDal _discountDal;
+        ISharedIdentityService _sharedIdentityService;
 
-        public DiscountManager(IDiscountDal discountDal)
+        public DiscountManager(IDiscountDal discountDal, ISharedIdentityService sharedIdentityService)
         {
             _discountDal = discountDal;
+            _sharedIdentityService= sharedIdentityService;
         }
 
         public async Task<Response<List<Discount>>> GetAll()
@@ -33,8 +36,8 @@ namespace FreeCourse.Services.DiscountEfCore.Business.Concrete
         [ValidationAspect(typeof(DiscountValidator),Priority = 1)]
         public async Task<Response<NoContent>> Save(Discount discount)
         {
-         
 
+            discount.UserId = _sharedIdentityService.GetUserId;
             await _discountDal.AddAsync(discount);
             return Response<NoContent>.Success(200);
         }

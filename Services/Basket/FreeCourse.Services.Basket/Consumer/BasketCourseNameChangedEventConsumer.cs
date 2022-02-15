@@ -21,7 +21,7 @@ namespace FreeCourse.Services.Basket.Consumer
         public async Task Consume(ConsumeContext<BasketCourseNameChangedEvent> context)
         {
             var keys = _basketDal.GetKeys();
-            if (keys != null)
+            if (keys != null) 
             {
                 foreach (var key in keys)
                 {

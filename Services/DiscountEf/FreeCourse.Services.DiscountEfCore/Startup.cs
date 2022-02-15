@@ -21,6 +21,7 @@ using FreeCourse.Services.DiscountEfCore.DataAccess.Concrete.PostgreSQL.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using FreeCourse.Shared.Services;
 
 namespace FreeCourse.Services.DiscountEfCore
 {
@@ -36,6 +37,8 @@ namespace FreeCourse.Services.DiscountEfCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
+            services.AddScoped<ISharedIdentityService, SharedIdentityService>();
             var requireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
             //  new AuthorizationPolicyBuilder().RequireClaim("scope", "discount_read", "discount_write"); fullpermisson ayiracagimiz zaman bu kod kullanilir
 
