@@ -57,17 +57,18 @@ namespace FreeCourse.Services.Catalog
             {
                 options.Filters.Add(new AuthorizeFilter());
             });
+
+            services.AddAutoMapper(typeof(Startup));
+
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICourseService, CourseManager>();
             services.Configure<DatabaseSettings>(Configuration.GetSection("DatabaseSettings"));
             services.AddSingleton<IDatabaseSettings>(sp => sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
-
+            services.AddDataProtection();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "FreeCourse.Services.Catalog", Version = "v1" });
             });
-            services.AddAutoMapper(typeof(Startup));
-
 
 
            

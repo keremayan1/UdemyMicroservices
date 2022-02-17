@@ -21,7 +21,7 @@ namespace FreeCourse.Web.Controllers
             _logger = logger;
             _catalogService = catalogService;
         }
-        [HttpGet]
+     
         public async Task<IActionResult> Index()
         {
             return View(await _catalogService.GetAllCourse());

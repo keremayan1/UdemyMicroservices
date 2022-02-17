@@ -11,7 +11,7 @@ namespace FreeCourse.Services.Catalog.Controllers
     [ApiController]
     public class CoursesController : CustomControllerBases
     {
-        private ICourseService _courseService;
+        private readonly ICourseService _courseService;
 
         public CoursesController(ICourseService courseService)
         {
@@ -21,43 +21,51 @@ namespace FreeCourse.Services.Catalog.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _courseService.GetAllAsync();
-          return  CreateActionResult(result);
-        }
-        [HttpGet("GetByUserId/{userId}")] //2. Yontem HttpGet Istegi Uzerinden
-      //  [Route("/api/[controller]/GetByUserId/{userId}")] 1.Yontem Route Yontemi
-        //courses/getbyuserid/userId
+            var response = await _courseService.GetAllAsync();
 
-        public async Task<IActionResult> GetByUserId(string userId)
-        {
-            var result = await _courseService.GetByUserIdAsync(userId);
-            return CreateActionResult(result);
+            return CreateActionResult(response);
         }
-        [HttpGet("getbyid/{courseId}")]
-        public async Task<IActionResult> GetByIdAsync(string courseId)
+
+        //courses/5
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(string id)
         {
-            var result = await _courseService.GetByIdAsync(courseId);
-            return CreateActionResult(result);
+            var response = await _courseService.GetByIdAsync(id);
+
+            return CreateActionResult(response);
         }
-        //courses/getbyid/id
+
+        [HttpGet]
+        [Route("/api/[controller]/GetAllByUserId/{userId}")]
+        public async Task<IActionResult> GetAllByUserId(string userId)
+        {
+            var response = await _courseService.GetByUserIdAsync(userId);
+
+            return CreateActionResult(response);
+        }
 
         [HttpPost]
-        public async Task<IActionResult> Add(CourseCreateDto courseCreateDto)
+        public async Task<IActionResult> Create(CourseCreateDto courseCreateDto)
         {
-            var result = await _courseService.AddAsync(courseCreateDto);
-            return CreateActionResult(result);
+            var response = await _courseService.AddAsync(courseCreateDto);
+
+            return CreateActionResult(response);
         }
+
         [HttpPut]
         public async Task<IActionResult> Update(CourseUpdateDto courseUpdateDto)
         {
-            var result = await _courseService.UpdateAsync(courseUpdateDto);
-            return CreateActionResult(result);
+            var response = await _courseService.UpdateAsync(courseUpdateDto);
+
+            return CreateActionResult(response);
         }
-        [HttpDelete("{courseId}")]
-        public async Task<IActionResult> Delete(string courseId)
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
         {
-            var result = await _courseService.DeleteAsync(courseId);
-            return CreateActionResult(result);
+            var response = await _courseService.DeleteAsync(id);
+
+            return CreateActionResult(response);
         }
     }
 }

@@ -13,8 +13,8 @@
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "GatewayAuthenticationScheme", //API Koruma
-        "AllowedScopes": [ "catalog_fullpermisson" ]//Hangi Scope Istiyor
+        "AuthenticationProviderKey": "GatewayAuthenticationScheme", 
+        "AllowedScopes": [ "catalog_fullpermisson" ]
       }
     },
     {
@@ -30,8 +30,8 @@
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "GatewayAuthenticationScheme", //API Koruma
-        "AllowedScopes": [ "photo_stock_fullpermisson" ] //Hangi Scope Istiyor
+        "AuthenticationProviderKey": "GatewayAuthenticationScheme",
+        "AllowedScopes": [ "photo_stock_fullpermisson" ] 
       }
     },
     {
@@ -47,8 +47,8 @@
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "GatewayAuthenticationScheme", //API Koruma
-        "AllowedScopes": [ "basket_fullpermisson" ] //Hangi Scope Istiyor
+        "AuthenticationProviderKey": "GatewayAuthenticationScheme", 
+        "AllowedScopes": [ "basket_fullpermisson" ] 
       }
     },
     {
@@ -65,7 +65,7 @@
       "UpstreamScheme": "http",
       "DelegatingHandlers": [ "TokenExchangeDelegateHandler" ],
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "GatewayAuthenticationScheme", //API Koruma
+        "AuthenticationProviderKey": "GatewayAuthenticationScheme"
         
       }
     },
@@ -82,8 +82,8 @@
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "GatewayAuthenticationScheme", //API Koruma
-        "AllowedScopes": [ "order_fullpermisson" ] //Hangi Scope Istiyor
+        "AuthenticationProviderKey": "GatewayAuthenticationScheme",
+        "AllowedScopes": [ "order_fullpermisson" ] 
       }
     },
     {
@@ -100,7 +100,7 @@
       "UpstreamScheme": "http",
       "DelegatingHandlers": [ "TokenExchangeDelegateHandler" ],
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "GatewayAuthenticationScheme" //API Koruma
+        "AuthenticationProviderKey": "GatewayAuthenticationScheme" 
         
       }
     }
