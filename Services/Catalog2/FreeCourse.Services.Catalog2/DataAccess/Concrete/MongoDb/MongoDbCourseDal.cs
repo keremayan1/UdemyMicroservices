@@ -9,7 +9,7 @@ namespace FreeCourse.Services.Catalog2.DataAccess.Concrete.MongoDb
 {
     public class MongoDbCourseDal:MongoDbRepository<Course>,ICourseDal
     {
-        public MongoDbCourseDal(MongoDbContextBase connectionSettings) : base(connectionSettings.connectionSettings)
+        public MongoDbCourseDal(MongoDbContext connectionSettings) : base(connectionSettings.connectionSettings)
         {
         }
     }
